@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@std/esm": "^0.26.0",
+    "bcryptjs": "^2.4.3",
     "debug": "^2.6.3",
     "esm": "^3.0.55",
     "koa": "^2.2.0",

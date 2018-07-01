@@ -3,8 +3,8 @@ import { getdetail } from '../controller/getStockDetail'
 const router = Router()
 
 router.get('/detail', async (ctx, next) => {
-    const param = ctx.request.query;
-    ctx.body = await getdetail(param["code"])
+    const { code : code } = ctx.request.query;
+    ctx.body = await getdetail(code)
 });
 
 router.get('/search', async (ctx, next) => {
