@@ -1,14 +1,39 @@
-doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    script(src='/javascripts/jquery-3.2.1.min.js')
-    script(src='/javascripts/search.js')
-  body
-  h1= title
-  p Search for your stock
-  
-  div(id = "search")
-    input(type="text" name="searchtext" class="searchword")
-    input(id="submit" type="button", value="Search")
+extend layout2
+
+block content
+  p.center.searchtitle 股票检索
+  |     
+  .row
+    .col
+      .form-group.search
+        input.form-control(type="text", value="", placeholder="请输入股票名称或代码")
+  |     
+  .row.info-row
+    .col
+      a.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 最高: #{highest}
+    |         
+    .col
+      a.btn.btn-block.btn-lg.btn-success.infostock(href="#fakelink") 最低: #{lowest}
+    |         
+    .col
+      a.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 开盘价: #{open}
+    |         
+    .col
+      a.btn.btn-block.btn-lg.btn-success.infostock(href="#fakelink") 收盘价: #{close}
+    |         
+    .col
+      a.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 成交量: #{volume}
+
+  .col.choose
+    .share.mrl
+      ul
+        li
+          label.share-label(for="share-toggle2") 折线图
+          |                 
+          input(type="checkbox", data-toggle="switch")
+        |               
+        li
+          label.share-label(for="share-toggle4") 表格
+          |                 
+          input(type="checkbox", checked="", data-toggle="switch")
+

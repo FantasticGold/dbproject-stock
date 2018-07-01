@@ -1,7 +1,11 @@
-function usernamevalidate(username) {
-    
+export const regExp_validate = {
+    usernameReg : /[a-zA-Z]\w{1,11}/,
+    //高强度密码
+    passwordReg : /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/,
+    //中
+    middlepw : /^(?=.{6,})(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/,
+    //低
+    lowpw : /^(?=.{6,})(?:\d+|[a-zA-Z]+|[!@#$%^&*]+)$/,
+    email : /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 }
 
-function passwordvalidate(password) {
-    
-}
