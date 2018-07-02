@@ -1,11 +1,9 @@
 import Router from 'koa-router'
-import { StockofUser } from "../controller/user"
+import { StockofUser, isLogin } from "../controller/user"
 
 const router = Router()
 
-router.use(async ()=>{
-    
-})
+router.use(isLogin);
 
 router.get('/prefer', async (ctx, next) => {
     const { email : email } = ctx.request.query;
