@@ -1,5 +1,4 @@
 .rfooter {
-.rfooter {
 	height: 25px;
 	text-align: center;
 	background-color: rgb(31, 42, 58);
@@ -154,6 +153,12 @@ html {
 	margin-top: 30px;
 }
 
+.follow {
+    width: 150px !important;
+    position: relative;
+    left: 86%;
+    margin-top: 40px;
+}
 
 
 
