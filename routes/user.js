@@ -1,14 +1,11 @@
 import Router from 'koa-router'
-import { StockofUser, isLogin, makePrefer, deletePrefer } from "../controller/user"
+import { getStock, isLogin, makePrefer, deletePrefer } from "../controller/user"
 
 const router = Router()
 
 router.use(isLogin);
 
-router.get('/prefer', async (ctx, next) => {
-    const { email : email } = ctx.request.query;
-    ctx.body = await StockofUser(email);
-})
+router.get('/prefer', getStock)
 .post('/prefer', makePrefer)
 .delete('/prefer', deletePrefer);
 

@@ -12,10 +12,13 @@ export async function isLogin(ctx, next){
     return next();
 }
 
-export async function StockofUser(email) {
+export async function getStock(ctx, next) {
+    const { email } = ctx.session.user;
+    console.log(email);
     const sql = `SELECT * FROM project.userandstock where email = ?`;
     const arg = [email];
-    return await DBquery(sql, arg);
+    ctx.body = await DBquery(sql, arg);
+    return true;
 }
 
 export async function makePrefer(ctx, next) {
