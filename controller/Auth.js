@@ -2,8 +2,7 @@ import mysql from 'mysql';
 import sqlconfig from '../config'
 import { regExp_validate } from './validate';
 import { passwdSha, compareSha } from './passwd-user';
-import bluebird from "bluebird"
-
+import DBquery from './sqlquery';
 export async function registerUser(ctx, next) {
     const { username : username, email : email, passwd : passwd} = ctx.request.body;
     if (!regExp_validate.usernameReg.test(username) || !regExp_validate.lowpw.test(passwd) || !regExp_validate.email.test(email)) {
@@ -21,38 +20,22 @@ export async function registerUser(ctx, next) {
         }
         return false;
     }
-    var connection = mysql.createConnection(sqlconfig); 
     const pwd = passwdSha(passwd);
-    connection.connect();
-    return await new Promise((resolve, reject)=>{
-        connection.query('insert into project.user value(?, ?, ?)', [username, email, pwd],  function (error, results, fields) {
-            if (error) { 
-                ctx.body = {
-                    msg : error,
-                    status: false,
-                };
-                reject(error);
-            }
-            connection.end();
-            ctx.body = {
-                status: true
-            };
-            resolve();
-        });
-    });
+    const sql = `insert into project.user value(?, ?, ?)`;
+    const arg = [username, email, pwd];
+    await DBquery(sql, arg);
+    ctx.body = {
+        msg: '注册成功',
+        status: true
+    }
+    return true;
 }
 
 export async function userexisted(email) {
-    var connection = mysql.createConnection(sqlconfig); 
-    connection.connect();
-    const res = await (new Promise((resolve, reject) =>{
-	    connection.query('select * from project.user where email = ?' , [email], function (error, results, fields) {
-	        if (error) throw error;
-	        resolve(results);
-	    });
-    }))
+    const sql = `select * from project.user where email = ?`;
+    const arg = [email];
+    const res = await DBquery(sql, arg);
     // console.log(res.length);
-    connection.end();
     return res.length == 0;
 }
 
@@ -65,16 +48,10 @@ export async function userlogin(ctx, next) {
         return;
     }
     const { email, passwd } = ctx.request.body;
-    var connection = mysql.createConnection(sqlconfig);
-    connection.connect();
-    const [ res ] = await new Promise((resolve, reject) =>{
-	    connection.query('select * from project.user where email = ?' , [email], function (error, results, fields) {
-	        if (error) throw error;
-	        resolve(results);
-	    });
-    })
-    connection.end();
-    console.log(res);
+    const sql = `select * from project.user where email = ?`;
+    const arg = [email];
+    const [ res ] = await DBquery(sql, arg);
+    // console.log(res);
     if (res && compareSha(passwd, res["password"])) {
         ctx.session.user = {
             username: res["name"],
