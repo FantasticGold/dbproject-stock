@@ -67,6 +67,25 @@ $(document).ready(function(){
 		else{
 			sweetAlert("哎呦……", "出错了！","error");
 		}
+		console.log('ajax')
+		$.ajax({
+			url : "http://127.0.0.1:3000/api/users/register",
+			type : "POST",
+			contentType: "application/json;charset=utf-8",
+			data : JSON.stringify({'username':y, 'email':x,'passwd':z}),
+			datatype : "text",
+			success : function(result) {
+				if (result){
+					window.location.href="[图片]https://www.baidu.com/"
+				}else{
+					sweetAlert("哎呦……", "注册失败！","error");
+				}
+
+			},
+			error:function(msg){
+				alert(msg)
+			}
+		})
 		
 	})
 })

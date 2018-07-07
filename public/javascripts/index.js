@@ -16,7 +16,7 @@ $(document).ready(function() {
 
   $("#login-btn").click(function() {
     const email = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
-    const low = /^(?=.{6,})(?:\d+|[a-zA-Z]+|[!@#$%^&*]+)$/
+    const low = /^(?=.{6,})(?:[0-9]+|[a-zA-Z]+|[!@#$%^&*]+)$/
     const name = $('#login-name').val()
     const pass = $('#login-pass').val()
     if (!email.test(name) || !low.test(pass)) {
