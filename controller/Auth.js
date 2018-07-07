@@ -4,8 +4,11 @@ import { regExp_validate } from './validate';
 import { passwdSha, compareSha } from './passwd-user';
 import DBquery from './sqlquery';
 export async function registerUser(ctx, next) {
-    const { username : username, email : email, passwd : passwd} = ctx.request.body;
-    if (!regExp_validate.usernameReg.test(username) || !regExp_validate.lowpw.test(passwd) || !regExp_validate.email.test(email)) {
+    const { username : username, email : email, passwd : passwd} = ctx.request.body;  
+    console.log(`username = ${username}, email = ${email}, passwd = ${passwd}`)
+    // if (!regExp_validate.usernameReg.test(username) || !regExp_validate.lowpw.test(passwd) || !regExp_validate.email.test(email)) {
+    if (false) {
+        console.log('info error')
         ctx.body = {
             msg: '输入信息有误',
             status: false
@@ -14,6 +17,7 @@ export async function registerUser(ctx, next) {
     }
     const existed = await userexisted(email);
     if (!existed) {
+        console.log('email error')
         ctx.body = {
             msg: '该用户邮件已被注册',
             status: false
@@ -35,6 +39,7 @@ export async function userexisted(email) {
     const sql = `select * from project.user where email = ?`;
     const arg = [email];
     const res = await DBquery(sql, arg);
+    console.log('access')
     // console.log(res.length);
     return res.length == 0;
 }
