@@ -1,59 +1,75 @@
-import mysql from 'mysql';
-import sqlconfig from '../config'
-import { regExp_validate } from './validate';
-import { passwdSha, compareSha } from './passwd-user';
+import DBquery from './sqlquery'
 
-export async function registerUser(username, email, password) {
-    if (!regExp_validate.usernameReg.test(username) && !regExp_validate.lowpw.test(password) && !regExp_validate.email.test(email)) return false;
-    const existed = await userexisted(email);
-    if (!existed) return false;
-    var connection = mysql.createConnection(sqlconfig); 
-    const pwd = passwdSha(password);
-    connection.connect();
-    connection.query('insert into project.user value(?, ?, ?)', [username, email, pwd],  function (error, results, fields) {
-        if (error) throw error;
-    });
-    connection.end();
+export async function isLogin(ctx, next){
+    if (!ctx.session.user) {
+        ctx.body = {
+            msg: '未登录状态',
+            state: false
+        }
+        return;
+    }
+    ctx.state.user = ctx.session.user;
+    return next();
+}
+
+export async function getStock(ctx, next) {
+    const { email } = ctx.session.user;
+    console.log(email);
+    const sql = `SELECT * FROM project.userandstock where email = ?`;
+    const arg = [email];
+    ctx.body = await DBquery(sql, arg);
     return true;
 }
 
-export async function userexisted(email) {
-    var connection = mysql.createConnection(sqlconfig); 
-    connection.connect();
-    const res = await (new Promise((resolve, reject) =>{
-	    connection.query('select * from project.user where email = ?' , [email], function (error, results, fields) {
-	        if (error) throw error;
-	        resolve(results);
-	    });
-    }))
-    console.log(res.length);
-    connection.end();
-    return res.length == 0;
+export async function makePrefer(ctx, next) {
+    const { code } = ctx.request.body;
+    const { email } = ctx.state.user;
+    // judge
+    const exist = await PreferExist(email, code);
+    const code_exist = await codeExist(code);
+    if (exist) {
+        ctx.body = {
+            msg: "prefer existed",
+            state: false
+        }
+        return false;  
+    }
+    if (!code_exist) {
+        ctx.body = {
+            msg: "Not existed",
+            state: false
+        }
+        return false;  
+    }
+    const sql = `insert into project.userandstock value(?, ?)`;
+    const arg = [email, code];
+    await DBquery(sql, arg);
+    ctx.body = {
+        msg: "Succuss add",
+        state: true
+    }
+    return true;
 }
 
-export async function userlogin(email, passwd) {
-    var connection = mysql.createConnection(sqlconfig);
-    connection.connect();
-    const [ res ] = await (new Promise((resolve, reject) =>{
-	    connection.query('select * from project.user where email = ?' , [email], function (error, results, fields) {
-	        if (error) throw error;
-	        resolve(results);
-	    });
-    }))
-    connection.end();
-    if (res && compareSha(passwd, res["password"])) return true;
-    return false;
+export async function PreferExist(email, code) {
+    const sql = `select * from project.userandstock where email = ? and code = ?`;
+    const arg = [email, code];
+    const res = await DBquery(sql, arg);
+    return res.length != 0;
 }
 
-export async function StockofUser(email) {
-    var connection = mysql.createConnection(sqlconfig);
-    connection.connect();
-    const res = await (new Promise((resolve, reject) =>{
-	    connection.query('SELECT * FROM project.userandstock where email = ?' , [email], function (error, results, fields) {
-	        if (error) throw error;
-	        resolve(results);
-	    });
-    }))
-    connection.end();
-    return res;
+export async function codeExist(code) {
+    const sql = `SELECT * FROM project.stock_data where code = ?`;
+    const arg = [code];
+    const res = await DBquery(sql, arg);
+    return res.length != 0;
+}
+
+export async function deletePrefer(ctx, next) {
+    const { code } = ctx.request.body
+    // const { code } = ctx.request.query;
+    const { email } = ctx.state.user;
+    const sql = `DELETE FROM project.userandstock WHERE email = ? and code = ?`;
+    const arg = [email, code];
+    return await DBquery(sql, arg);
 }
