@@ -38,7 +38,7 @@ $(document).ready(function(){
 		else{
 			flag4 = false;
 		}
-		
+
 		var valid = true;
 		if (z != m){
 			valid = false;
@@ -54,39 +54,38 @@ $(document).ready(function(){
 		console.log(flag3)
 		console.log(flag4)
 		if (valid == true){
-			swal({ 
-				title: '登陆', 
-				text: 'Login', 
+			swal({
+				title: '登陆',
+				text: 'Login',
 				type: 'success',
 				confirmButtonColor: '#3085d6',
-				confirmButtonText: '确定', 
+				confirmButtonText: '确定',
 			}).then(function(){
-				window.location.href = "http://www.baidu.com"
+
+				$.ajax({
+           url : "http://127.0.0.1:3000/api/auth/register",
+           type : "POST",
+           contentType: "application/json;charset=utf-8",
+           data : JSON.stringify({'username':y, 'email':x,'passwd':z}),
+           dataType : "text",
+           success : function(result) {
+						 if (result){
+                window.location.href="/main/main"
+					   }else{
+							 sweetAlert("哎呦……", "注册失败！","error");
+						 }
+
+           },
+           error:function(msg){
+             alert(msg)
+           }
+})
 			})
 		}
 		else{
 			sweetAlert("哎呦……", "出错了！","error");
 		}
-		console.log('ajax')
-		$.ajax({
-			url : "http://127.0.0.1:3000/api/users/register",
-			type : "POST",
-			contentType: "application/json;charset=utf-8",
-			data : JSON.stringify({'username':y, 'email':x,'passwd':z}),
-			datatype : "text",
-			success : function(result) {
-				if (result){
-					window.location.href="[图片]https://www.baidu.com/"
-				}else{
-					sweetAlert("哎呦……", "注册失败！","error");
-				}
 
-			},
-			error:function(msg){
-				alert(msg)
-			}
-		})
-		
 	})
 })
 /*
