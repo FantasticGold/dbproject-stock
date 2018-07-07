@@ -24,21 +24,21 @@ html
     .row.demo-row
       .col
         nav.navbar.navbar-inverse.navbar-embossed.navbar-expand-lg(role="navigation")
-          a.navbar-brand(href="index.html") HOME
+          a.navbar-brand(href="/") HOME
           |             
           button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbar-collapse-01")
           |             
           #navbar-collapse-01.collapse.navbar-collapse
             ul.nav.navbar-nav.mr-auto
               li
-                a(href="stock.html") 股票检索
+                a(href="/api/stock/search") 股票检索
               |                 
               li
                 a(href="Aboutus.html") 关于我们
             |                
-            img(src="../resource/people.svg", height="45px", width="45px")
+            img(src="/resource/people.svg", height="45px", width="45px")
             li.nav.user
-              a#username(href="../userinfo/userinfo") Haide
+              a#username(href="/userinfo/userinfo") Haide
 
     block content
     block foot
