@@ -6,8 +6,8 @@ import DBquery from './sqlquery';
 export async function registerUser(ctx, next) {
     const { username : username, email : email, passwd : passwd} = ctx.request.body;  
     console.log(`username = ${username}, email = ${email}, passwd = ${passwd}`)
-    // if (!regExp_validate.usernameReg.test(username) || !regExp_validate.lowpw.test(passwd) || !regExp_validate.email.test(email)) {
-    if (false) {
+    if (!regExp_validate.usernameReg.test(username) || !regExp_validate.lowpw.test(passwd) || !regExp_validate.email.test(email)) {
+    // if (false) {
         console.log('info error')
         ctx.body = {
             msg: '输入信息有误',
@@ -45,6 +45,7 @@ export async function userexisted(email) {
 }
 
 export async function userlogin(ctx, next) {
+    console.log('user login')
     if (ctx.session.user) {
         ctx.body = {
             msg : 'already logined',
@@ -53,9 +54,11 @@ export async function userlogin(ctx, next) {
         return;
     }
     const { email, passwd } = ctx.request.body;
+    console.log(`email = ${email}, passwd = ${passwd}`)
     const sql = `select * from project.user where email = ?`;
     const arg = [email];
     const [ res ] = await DBquery(sql, arg);
+    console.log('sql query start')
     // console.log(res);
     if (res && compareSha(passwd, res["password"])) {
         ctx.session.user = {

@@ -6,7 +6,7 @@ $(document).ready(function() {
     if (typeof(email) == 'undefined' || email == null){
       flag = false;
     }
-    console.log(flag)
+    // console.log(flag)
     if (flag == true){
       window.location.href = `/main/main?email=${email}&pass=${pass}`
     }
@@ -22,9 +22,30 @@ $(document).ready(function() {
     if (!email.test(name) || !low.test(pass)) {
       alert('HaHaHa, you are fake!')
     } else {
-      $.cookie('email', name)
-      $.cookie('pass', pass)
-      window.location.href = `/main/main?email=${name}&pass=${pass}`
+      $.ajax({
+        url : "http://127.0.0.1:3000/api/auth/login",
+        type : "POST",
+        contentType: "application/json;charset=utf-8",
+        data : JSON.stringify({
+          'email': name,
+          'passwd': pass
+        }),
+        dataType : "text",
+        success : function(result) {
+          console.log(result)
+          if (result.status) {
+            // $.cookie('email', name)
+            // $.cookie('pass', pass)
+            // window.location.href = `/main/main?email=${name}&pass=${pass}`
+            window.location.href="/main/main"
+          } else {
+            sweetAlert("哎呦……", "something wrong","error");
+          }
+        },
+        error:function(msg){
+          alert(msg)
+        }
+      })
     }
   })
 })
