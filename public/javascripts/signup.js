@@ -72,7 +72,7 @@ $(document).ready(function(){
 						 if (result){
                 window.location.href="/main/main"
 					   }else{
-							 sweetAlert("哎呦……", "注册失败！","error");
+							 sweetAlert("哎呦……", result.body.msg,"error");
 						 }
 
            },
@@ -83,7 +83,7 @@ $(document).ready(function(){
 			})
 		}
 		else{
-			sweetAlert("哎呦……", "出错了！","error");
+			sweetAlert("哎呦……", "出错了！", "error");
 		}
 
 	})
