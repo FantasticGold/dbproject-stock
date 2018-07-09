@@ -75,6 +75,7 @@ export async function userlogin(ctx, next) {
             status: false
         };
     }
+    console.log('sql query end')
 }
 
 export async function logout(ctx, next) {
