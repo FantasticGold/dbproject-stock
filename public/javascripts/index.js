@@ -22,6 +22,7 @@ $(document).ready(function() {
     if (!email.test(name) || !low.test(pass)) {
       alert('HaHaHa, you are fake!')
     } else {
+      console.log('waiting...')
       $.ajax({
         url : "http://127.0.0.1:3000/api/auth/login",
         type : "POST",
@@ -33,11 +34,15 @@ $(document).ready(function() {
         dataType : "text",
         success : function(result) {
           console.log(result)
-          if (result.status) {
+          console.log(typeof result)
+          const info = JSON.parse(result)
+          console.log(info.status)
+          console.log(info.msg)
+          if (result) {
             // $.cookie('email', name)
             // $.cookie('pass', pass)
             // window.location.href = `/main/main?email=${name}&pass=${pass}`
-            window.location.href="/main/main"
+            // window.location.href="/main/main"
           } else {
             sweetAlert("哎呦……", "something wrong","error");
           }

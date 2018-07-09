@@ -11,13 +11,13 @@ html
       link(rel = 'stylesheet', href='/stylesheets/docs/assets/css/demo.css')
       link(rel = 'stylesheet', href='/stylesheets/dist/css/flat-ui.css')
 
-    block scripts
       script(src='https://unpkg.com/sweetalert/dist/sweetalert.min.js')
       script(src='https://code.jquery.com/jquery-3.3.1.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
       script(src='https://unpkg.com/popper.js@1.14.1/dist/umd/popper.min.js', crossorigin='anonymous')
       script(src='http://vjs.zencdn.net/6.6.3/video.js')
       script(src='/stylesheets/dist/scripts/flat-ui.js')
       script(src='/stylesheets/docs/assets/js/application.js')
+    block scripts
     
   body
     block nav
@@ -37,6 +37,8 @@ html
                 a(href="/aboutus") 关于我们
             |                
             img(src="/resource/people.svg", height="45px", width="45px")
+            li.nav.user
+              a#logoutbtn(href="/api/auth/logout") logout
             li.nav.user
               a#username(href="/userinfo/userinfo") #{username}
 

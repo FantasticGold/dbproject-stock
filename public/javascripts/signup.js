@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$("a.btn").click(function(){
+	$("a#signupbtn").click(function(){
 		var x = $("#e-mail").val()
 		var y = $("#username").val()
 		var z = $("#password").val()
