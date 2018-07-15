@@ -26,7 +26,8 @@
     "koa-static": "^3.0.0",
     "koa-views": "^5.2.1",
     "mysql": "github:mysqljs/mysql",
-    "pug": "^2.0.0-rc.1"
+    "pug": "^2.0.0-rc.1",
+    "sweetalert2": "^7.25.0"
   },
   "devDependencies": {
     "nodemon": "^1.8.1"

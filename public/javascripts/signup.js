@@ -54,36 +54,49 @@ $(document).ready(function(){
 		console.log(flag3)
 		console.log(flag4)
 		if (valid == true){
-			swal({
-				title: '登陆',
-				text: 'Login',
-				type: 'success',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '确定',
-			}).then(function(){
-
-				$.ajax({
-           url : "http://127.0.0.1:3000/api/auth/register",
-           type : "POST",
-           contentType: "application/json;charset=utf-8",
-           data : JSON.stringify({'username':y, 'email':x,'passwd':z}),
-           dataType : "text",
-           success : function(result) {
-						 if (result){
-                window.location.href="/main/main"
-					   }else{
-							 sweetAlert("哎呦……", result.body.msg,"error");
-						 }
-
-           },
-           error:function(msg){
-             alert(msg)
-           }
-})
+			$.ajax({
+				url : "http://127.0.0.1:3000/api/auth/register",
+				type : "POST",
+				contentType: "application/json;charset=utf-8",
+				data : JSON.stringify({'username':y, 'email':x,'passwd':z}),
+				dataType : "text",
+				success : function(result) {
+          const info = JSON.parse(result)
+					if (info.status == true){
+						$.ajax({
+							url : "http://127.0.0.1:3000/api/auth/login",
+							type : "POST",
+							contentType: "application/json;charset=utf-8",
+							data : JSON.stringify({
+								'email': x,
+								'passwd': z
+							}),
+							dataType : "text",
+							success : function(result) {
+								const info = JSON.parse(result)
+								if (info.status == true) {
+									sweetAlert("注册", "欢迎回来", "success").then(function () {
+										window.location.href = "/main/main"
+									})
+								} else {
+									sweetAlert("哎呦!", "信息不对", "error")
+								}
+							},
+							error: function () {
+								sweetAlert("哎呦!", "连接不上服务器", "error")
+							}
+						})
+					}else{
+						sweetAlert("哎呦!", info.msg, "error");
+					}
+				},
+				error: function(msg){
+								sweetAlert("哎呦!", "连接不上服务器", "error")
+				}
 			})
-		}
-		else{
-			sweetAlert("哎呦……", "出错了！", "error");
+
+		} else {
+				sweetAlert("哎呦!", "信息不对", "error")
 		}
 
 	})

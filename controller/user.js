@@ -1,15 +1,21 @@
 import DBquery from './sqlquery'
 
 export async function isLogin(ctx, next){
+    console.log(`islogin`)
     if (!ctx.session.user) {
         ctx.body = {
             msg: '未登录状态',
             state: false
         }
-        return;
+    } else {
+        ctx.body = {
+            msg: ctx.session.user.email,
+            user: ctx.session.user,
+            state: true
+        }
+        console.log(ctx.session.user)
     }
-    ctx.state.user = ctx.session.user;
-    return next();
+    console.log(`state = ${ctx.body.state}`)
 }
 
 export async function getStock(ctx, next) {

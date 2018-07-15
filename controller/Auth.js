@@ -6,11 +6,23 @@ import DBquery from './sqlquery';
 export async function registerUser(ctx, next) {
     const { username : username, email : email, passwd : passwd} = ctx.request.body;  
     console.log(`username = ${username}, email = ${email}, passwd = ${passwd}`)
-    if (!regExp_validate.usernameReg.test(username) || !regExp_validate.lowpw.test(passwd) || !regExp_validate.email.test(email)) {
+    const test1 = regExp_validate.usernameReg.test(username)
+    const test2 = regExp_validate.lowpw.test(passwd)
+    const test3 = regExp_validate.email.test(email)
+    console.log(`email = ${test3}, pw = ${test2}, name = ${test1}`)
+    if (!test1 || !test2 || !test3) {
     // if (false) {
+        let errormsg = ''
+        if (test3 == false) {
+            errormsg = "邮箱格式不对"
+        } else if (test1 == false) {
+            errormsg = "用户名格式不对"
+        } else {
+            errormsg = "密码格式不对"
+        }
         console.log('info error')
         ctx.body = {
-            msg: '输入信息有误',
+            msg: errormsg,
             status: false
         }
         return false;
@@ -45,16 +57,18 @@ export async function userexisted(email) {
 }
 
 export async function userlogin(ctx, next) {
-    console.log('user login')
-    if (ctx.session.user) {
+    // console.log('user login')
+    const { email, passwd } = ctx.request.body;
+    // console.log(`email = ${email}, passwd = ${passwd}`)
+    // console.log(`has = ${ctx.session.user.email}`)
+    // console.log(`now = ${email}`)
+    if (ctx.session.user && ctx.session.user.email === email) {
         ctx.body = {
             msg : 'already logined',
             state: false
         }
         return;
     }
-    const { email, passwd } = ctx.request.body;
-    console.log(`email = ${email}, passwd = ${passwd}`)
     const sql = `select * from project.user where email = ?`;
     const arg = [email];
     const [ res ] = await DBquery(sql, arg);
