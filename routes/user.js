@@ -3,10 +3,9 @@ import { getStock, isLogin, makePrefer, deletePrefer } from "../controller/user"
 
 const router = Router()
 
-router.use(isLogin);
-
 router.get('/prefer', getStock)
 .post('/prefer', makePrefer)
-.delete('/prefer', deletePrefer);
+.delete('/prefer', deletePrefer)
+.post('/isLogin', isLogin)
 
 export default router;

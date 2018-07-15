@@ -17,6 +17,11 @@ html
       script(src='http://vjs.zencdn.net/6.6.3/video.js')
       script(src='/stylesheets/dist/scripts/flat-ui.js')
       script(src='/stylesheets/docs/assets/js/application.js')
+      script(src='/javascripts/layout2.js')
+      script(src = '/javascripts/jquery-3.2.1.min.js')
+      script(src = '/javascripts/signup.js')
+      script(src="https://cdn.bootcss.com/limonte-sweetalert2/7.21.1/sweetalert2.js")
+      link(rel='stylesheet', href='https://cdn.bootcss.com/limonte-sweetalert2/7.21.1/sweetalert2.css')
     block scripts
     
   body
@@ -24,7 +29,7 @@ html
     .row.demo-row
       .col
         nav.navbar.navbar-inverse.navbar-embossed.navbar-expand-lg(role="navigation")
-          a.navbar-brand(href="/") HOME
+          a#btnhome.navbar-brand(href="#") HOME
           |             
           button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbar-collapse-01")
           |             
@@ -38,9 +43,7 @@ html
             |                
             img(src="/resource/people.svg", height="45px", width="45px")
             li.nav.user
-              a#logoutbtn(href="/api/auth/logout") logout
-            li.nav.user
-              a#username(href="/userinfo/userinfo") #{username}
+              a#username(href="/userinfo/userinfo")
 
     block content
     block foot
