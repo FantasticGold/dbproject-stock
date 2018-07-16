@@ -1,0 +1,41 @@
+extend layout2
+
+block scripts
+  script(src="http://hq.sinajs.cn/list=sh000001" charset="gb2312")
+  script(src="http://hq.sinajs.cn/list=sz399001" charset="gb2312")
+  script(src='/javascripts/stock_index.js')
+block content
+  p.center.searchtitle 上证指数
+  .row.info-row
+    .col
+      a#shhigh.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 最高: #{shhighest}
+    |
+    .col
+      a#shlow.btn.btn-block.btn-lg.btn-success.infostock(href="#fakelink") 最低: #{shlowest}
+    |
+    .col
+      a#shopen.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 开盘价: #{shopen}
+    |
+    .col
+      a#shclose.btn.btn-block.btn-lg.btn-success.infostock(href="#fakelink") 收盘价: #{shclose}
+    |
+    .col
+      a#shvolume.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 成交量: #{shvolume}
+
+  p.center.searchtitle1 深证指数
+
+  .row.info-row
+    .col
+      a#szhigh.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 最高: #{szhighest}
+    |
+    .col
+      a#szlow.btn.btn-block.btn-lg.btn-success.infostock(href="#fakelink") 最低: #{szlowest}
+    |
+    .col
+      a#szopen.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 开盘价: #{szopen}
+    |
+    .col
+      a#szclose.btn.btn-block.btn-lg.btn-success.infostock(href="#fakelink") 收盘价: #{szclose}
+    |
+    .col
+      a#szvolumn.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 成交量: #{szvolume}

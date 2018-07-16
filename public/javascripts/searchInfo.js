@@ -6,6 +6,10 @@ $(document).ready(function(){
        const pattrem = /^\d{6}$/
         if (pattrem.test(str) == true) {
         //  console.log("query")
+          $.get("/api/stock/company?code=" + str, function (result, status) {
+            const company = result[0].stock_source
+            $("a#textcompany").text(`交易所：${company}`)
+          })
           $.get("/api/stock/detail?code="+ str, function (result, status) {
             console.log(`${result.length} + ${status}`)
             if ('success' == status) {

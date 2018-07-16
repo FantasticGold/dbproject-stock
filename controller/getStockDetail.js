@@ -18,6 +18,21 @@ export async function querybystr(code, name, num = 10) {
     return res;
 }
 
+export async function getCompany(code) {
+    console.log(`getcompany: ${code}`)
+    const sql = `SELECT stock_source FROM project.stock_data WHERE stock_data.code = ?`;
+    // const sql = `SELECT * FROM project.stock_data, project.cod where ` + 
+    //             `project.stock_data.code = ? ` + 
+    //             `and project.stock_data.stock_source = project.cod.id`;
+    const arg = [code];
+    const res = await DBquery(sql, arg)
+    console.log(res)
+    // const sql2 = `SELECT name FROM project.cod WHERE cid = ?`;
+    // const arg2 = [res]
+    // return await DBquery(sql2, arg2)
+    return res
+}
+
 export async function getdetail(code) {
     const sql = `SELECT time, open, close, high, low, volume FROM project.maindata where code = ?`;
     const arg = [code];

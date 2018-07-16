@@ -2,18 +2,21 @@ extend layout2
 
 block content
   script(src = '/javascripts/userinfo.js')
-  .userinfo
+  link(rel='stylesheet', href='/stylesheets/background.css')
+  .info
+    //- .info-content
+    //- .userinfo
     .icon
       img(src="/resource/mine_fill.svg")
     |       
     .info-content
-      p
+      p.description
         | 用户名: 
         span#username 
         |
         br
         |            邮箱: 
-        span#username 
+        span#useremail 
         |
         br
         |            自选股数量:

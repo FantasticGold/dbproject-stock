@@ -25,6 +25,7 @@ export async function getStock(email) {
     return await DBquery(sql, arg);
 }
 
+
 export async function makePrefer(ctx, next) {
     const { code } = ctx.request.body;
     const email = ctx.session.user.email
