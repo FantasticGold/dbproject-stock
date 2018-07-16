@@ -5,7 +5,7 @@ import authrt from './auth'
 
 const router = Router()
 
-router.use('/users', userrt.routes());
+router.use('/users', userrt.routes())
 router.use('/stock', stockrt.routes())
-router.use('/auth', authrt.routes());
+router.use('/auth', authrt.routes())
 export default router
