@@ -18,31 +18,30 @@ export async function isLogin(ctx, next){
     console.log(`state = ${ctx.body.state}`)
 }
 
-export async function getStock(ctx, next) {
-    const { email } = ctx.session.user;
-    console.log(email);
+export async function getStock(email) {
+    console.log(`getemail: ${email}`)
     const sql = `SELECT * FROM project.userandstock where email = ?`;
     const arg = [email];
-    ctx.body = await DBquery(sql, arg);
-    return true;
+    return await DBquery(sql, arg);
 }
 
 export async function makePrefer(ctx, next) {
     const { code } = ctx.request.body;
-    const { email } = ctx.state.user;
+    const email = ctx.session.user.email
+    console.log(`code = ${code}, email = ${email}`)
     // judge
     const exist = await PreferExist(email, code);
     const code_exist = await codeExist(code);
     if (exist) {
         ctx.body = {
-            msg: "prefer existed",
+            msg: "已添加自选股",
             state: false
         }
         return false;  
     }
     if (!code_exist) {
         ctx.body = {
-            msg: "Not existed",
+            msg: "自选股不存在",
             state: false
         }
         return false;  

@@ -90,6 +90,30 @@ $(document).ready(function(){
         }
   })
 
+  $("a#prefer").click(function () {
+    console.log("test")
+    $.ajax({
+      url : "/api/users/add",
+      type : "POST",
+      contentType: "application/json;charset=utf-8",
+      data : JSON.stringify({
+        'code': $(".form-control").val()
+      }),
+      dataType : "text",
+      success : function(result) {
+        console.log(result)
+        const info = JSON.parse(result)
+        if (info.state == true) {
+          sweetAlert("自选股", "添加成功", "success")
+        } else {
+          sweetAlert("哎呦!", info.msg, "error")
+        }
+      },
+      error:function(){
+        sweetAlert("哎呦!", "连接不上服务器", "error")
+      }
+    })
+  })
 })
 /*
 $(document).ready(function(){
