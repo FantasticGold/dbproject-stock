@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $.ajax({
-    url : "http://127.0.0.1:3000/api/users/isLogin",
+    url : "/api/users/isLogin",
     type : "POST",
     contentType: "application/json;charset=utf-8",
     dataType : "text",
@@ -18,7 +18,7 @@ $(document).ready(function() {
   $("a#btnhome").click(function () {
     sweetAlert("返回主页", "已登出", "success").then(function () {
       $.ajax({
-        url : "http://127.0.0.1:3000/api/auth/logout",
+        url : "/api/auth/logout",
         type : "POST",
         contentType: "application/json;charset=utf-8",
         dataType : "text",
