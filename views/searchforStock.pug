@@ -12,23 +12,23 @@ block content
   .row
     .col
       .form-group.search
-        input.form-control(type="text", value="", placeholder="请输入股票名称或代码")
+        input.form-control(type="text", value="", placeholder="请输入六位股票代码")
   |     
   .row.info-row
     .col
-      a.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 最高: #{highest}
+      a#texthigh.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 最高: #{highest}
     |         
     .col
-      a.btn.btn-block.btn-lg.btn-success.infostock(href="#fakelink") 最低: #{lowest}
+      a#textlow.btn.btn-block.btn-lg.btn-success.infostock(href="#fakelink") 最低: #{lowest}
     |         
     .col
-      a.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 开盘价: #{open}
+      a#textopen.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 开盘价: #{open}
     |         
     .col
-      a.btn.btn-block.btn-lg.btn-success.infostock(href="#fakelink") 收盘价: #{close}
+      a#textclose.btn.btn-block.btn-lg.btn-success.infostock(href="#fakelink") 收盘价: #{close}
     |         
     .col
-      a.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 成交量: #{volume}
+      a#textvolume.btn.btn-block.btn-lg.btn-danger.infostock(href="#fakelink") 成交量: #{volume}
 
   #myDiv
   |     

@@ -55,7 +55,7 @@ $(document).ready(function(){
 		console.log(flag4)
 		if (valid == true){
 			$.ajax({
-				url : "http://127.0.0.1:3000/api/auth/register",
+				url : "/api/auth/register",
 				type : "POST",
 				contentType: "application/json;charset=utf-8",
 				data : JSON.stringify({'username':y, 'email':x,'passwd':z}),
@@ -64,7 +64,7 @@ $(document).ready(function(){
           const info = JSON.parse(result)
 					if (info.status == true){
 						$.ajax({
-							url : "http://127.0.0.1:3000/api/auth/login",
+							url : "/api/auth/login",
 							type : "POST",
 							contentType: "application/json;charset=utf-8",
 							data : JSON.stringify({

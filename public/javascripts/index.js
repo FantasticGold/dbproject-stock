@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $.ajax({
-    url : "http://127.0.0.1:3000/api/users/isLogin",
+    url : "/api/users/isLogin",
     type : "POST",
     contentType: "application/json;charset=utf-8",
     dataType : "text",
@@ -41,7 +41,7 @@ $(document).ready(function() {
     } else {
       // console.log('waiting...')
       $.ajax({
-        url : "http://127.0.0.1:3000/api/auth/login",
+        url : "/api/auth/login",
         type : "POST",
         contentType: "application/json;charset=utf-8",
         data : JSON.stringify({
